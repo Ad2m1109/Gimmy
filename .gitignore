@@ -1,0 +1,65 @@
+# ─── Environment & Secrets ───
+.env
+.env.*
+*.env
+.env.local
+.env.production
+
+# ─── Python ───
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+eggs/
+*.egg
+.eggs/
+
+# ─── Virtual Environment ───
+venv/
+.venv/
+ENV/
+env/
+
+# ─── Node (if any) ───
+node_modules/
+npm-debug.log*
+
+# ─── IDE / Editor ───
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ─── Logs ───
+*.log
+logs/
+
+# ─── Docker ───
+docker-compose.override.yml
+
+# ─── Database ───
+*.db
+*.sqlite3
+
+# ─── Alembic ───
+alembic/versions/*.pyc
+
+# ─── Redis ───
+dump.rdb
+
+# ─── OS ───
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ─── Misc ───
+*.bak
+*.tmp
+*.temp
+.cache/

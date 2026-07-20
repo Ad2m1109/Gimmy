@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — GIMMY</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#0B1300;--surface:#141E0A;--surface-2:#1C2A12;--surface-3:#243318;
+  --border:#2A3D1C;--border-strong:#3A5428;
+  --text:#E8F0DE;--text-sec:#A3B893;--text-tert:#6B8258;
+  --primary:#A3FF12;--primary-dim:rgba(163,255,18,0.12);
+  --danger:#EF4444;--success:#22C55E;
+}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+/* ── Login ── */
+.login-page{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px;}
+.login-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:40px;width:400px;max-width:100%;}
+.login-card h1{font-family:'Sora';font-size:24px;font-weight:800;margin-bottom:4px;}
+.login-card p{color:var(--text-sec);font-size:13px;margin-bottom:28px;}
+.login-field{margin-bottom:16px;}
+.login-field label{display:block;font-size:13px;font-weight:600;color:var(--text-sec);margin-bottom:6px;}
+.login-field input{width:100%;padding:10px 14px;border-radius:10px;background:var(--surface-2);border:1px solid var(--border);color:var(--text);font-size:14px;font-family:'Inter';outline:none;}
+.login-field input:focus{border-color:var(--primary);}
+.login-btn{width:100%;padding:12px;border-radius:12px;background:var(--primary);color:#0B1300;border:none;font-family:'Sora';font-weight:700;font-size:15px;cursor:pointer;margin-top:8px;transition:filter .15s;}
+.login-btn:hover{filter:brightness(1.1);}
+.login-error{color:var(--danger);font-size:13px;margin-top:12px;display:none;}
+
+/* ── Dashboard ── */
+.admin-page{display:none;min-height:100vh;padding:32px 48px;}
+.admin-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;}
+.admin-title{font-family:'Sora';font-size:28px;font-weight:800;}
+.admin-subtitle{color:var(--text-sec);font-size:14px;margin-top:4px;}
+.admin-actions{display:flex;gap:12px;}
+.btn-admin{display:flex;align-items:center;gap:8px;padding:10px 20px;border-radius:12px;font-family:'Sora';font-weight:600;font-size:14px;cursor:pointer;border:none;transition:all .15s;}
+.btn-primary{background:var(--primary);color:#0B1300;}
+.btn-primary:hover{filter:brightness(1.1);transform:translateY(-1px);}
+.btn-secondary{background:var(--surface-2);color:var(--text-sec);border:1px solid var(--border);}
+.btn-secondary:hover{border-color:var(--border-strong);color:var(--text);}
+.btn-admin svg{width:18px;height:18px;}
+
+/* ── Stats ── */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px;}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px 24px;}
+.stat-label{font-size:13px;color:var(--text-tert);font-weight:500;margin-bottom:8px;}
+.stat-value{font-family:'Sora';font-size:28px;font-weight:800;}
+
+/* ── Table ── */
+.table-wrap{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;}
+.table-header{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;border-bottom:1px solid var(--border);}
+.table-title{font-family:'Sora';font-weight:700;font-size:16px;}
+.search-input{padding:8px 14px;border-radius:10px;background:var(--surface-2);border:1px solid var(--border);color:var(--text);font-size:13px;font-family:'Inter';width:260px;outline:none;}
+.search-input:focus{border-color:var(--primary);}
+table{width:100%;border-collapse:collapse;}
+th{text-align:left;padding:12px 24px;font-size:12px;font-weight:600;color:var(--text-tert);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border);}
+td{padding:14px 24px;border-bottom:1px solid var(--border);vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:var(--surface-2);}
+
+.game-info{display:flex;align-items:center;gap:14px;}
+.game-thumb{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;color:rgba(255,255,255,.8);flex-shrink:0;}
+.game-name{font-weight:600;font-size:14px;}
+.game-slug{font-size:12px;color:var(--text-tert);margin-top:2px;}
+
+.badge{padding:3px 10px;border-radius:8px;font-size:11px;font-weight:600;text-transform:uppercase;}
+.badge-easy{background:rgba(34,197,94,0.14);color:#22C55E;}
+.badge-medium{background:rgba(249,115,22,0.14);color:#F97316;}
+.badge-hard{background:rgba(239,68,68,0.14);color:#EF4444;}
+
+.toggle{width:42px;height:24px;border-radius:12px;border:none;cursor:pointer;position:relative;transition:background .2s;}
+.toggle.on{background:#22C55E;}
+.toggle.off{background:var(--surface-3);}
+.toggle::after{content:'';position:absolute;top:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:left .2s;}
+.toggle.on::after{left:21px;}
+.toggle.off::after{left:3px;}
+
+.icon-btn{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;border:1px solid var(--border);background:var(--surface-2);color:var(--text-sec);cursor:pointer;transition:all .15s;}
+.icon-btn:hover{border-color:var(--primary);color:var(--primary);}
+.icon-btn.danger:hover{border-color:var(--danger);color:var(--danger);}
+.icon-btn svg{width:16px;height:16px;}
+
+.empty-state{text-align:center;padding:48px;color:var(--text-tert);}
+
+/* ── Modal ── */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100;align-items:center;justify-content:center;}
+.modal-bg.show{display:flex;}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:32px;width:480px;max-width:95vw;max-height:90vh;overflow-y:auto;}
+.modal h2{font-family:'Sora';font-size:20px;font-weight:700;margin-bottom:4px;}
+.modal .sub{color:var(--text-sec);font-size:13px;margin-bottom:24px;}
+.field{margin-bottom:16px;}
+.field label{display:block;font-size:13px;font-weight:600;color:var(--text-sec);margin-bottom:6px;}
+.field input,.field select,.field textarea{width:100%;padding:10px 14px;border-radius:10px;background:var(--surface-2);border:1px solid var(--border);color:var(--text);font-size:14px;font-family:'Inter';outline:none;}
+.field textarea{min-height:80px;resize:vertical;}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--primary);}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.check{display:flex;align-items:center;gap:8px;margin-top:12px;}
+.check input{width:18px;height:18px;accent-color:var(--primary);}
+.check label{font-size:13px;color:var(--text-sec);cursor:pointer;}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:24px;}
+.btn-cancel{padding:10px 20px;border-radius:10px;background:var(--surface-2);color:var(--text-sec);border:1px solid var(--border);font-family:'Sora';font-weight:600;font-size:13px;cursor:pointer;}
+.btn-save{padding:10px 24px;border-radius:10px;background:var(--primary);color:#0B1300;border:none;font-family:'Sora';font-weight:700;font-size:13px;cursor:pointer;}
+.btn-save:hover{filter:brightness(1.1);}
+.btn-delete{padding:10px 20px;border-radius:10px;background:rgba(239,68,68,0.12);color:#EF4444;border:1px solid rgba(239,68,68,0.2);font-family:'Sora';font-weight:600;font-size:13px;cursor:pointer;}
+
+/* ── Toast ── */
+.toast-box{position:fixed;top:20px;right:20px;z-index:200;display:flex;flex-direction:column;gap:8px;}
+.toast{padding:12px 20px;border-radius:10px;font-size:13px;font-weight:600;transform:translateX(120%);transition:transform .3s;font-family:'Sora';}
+.toast.show{transform:translateX(0);}
+.toast-success{background:rgba(34,197,94,0.15);color:#22C55E;border:1px solid rgba(34,197,94,0.3);}
+.toast-warning{background:rgba(239,68,68,0.15);color:#EF4444;border:1px solid rgba(239,68,68,0.3);}
+.toast-info{background:rgba(163,255,18,0.1);color:var(--primary);border:1px solid rgba(163,255,18,0.2);}
+
+@media(max-width:900px){
+  .admin-page{padding:20px 16px;}
+  .stats-grid{grid-template-columns:1fr 1fr;}
+  table{font-size:13px;}
+  th,td{padding:10px 12px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ LOGIN ═══════════ -->
+<div class="login-page" id="loginPage">
+  <div class="login-card">
+    <h1>GIMMY Admin</h1>
+    <p>Sign in with your admin account</p>
+    <form id="loginForm">
+      <div class="login-field">
+        <label>Email or Username</label>
+        <input type="text" id="loginEmail" placeholder="admin@gimmy.com" required>
+      </div>
+      <div class="login-field">
+        <label>Password</label>
+        <input type="password" id="loginPass" placeholder="Enter password" required>
+      </div>
+      <button type="submit" class="login-btn">Sign In</button>
+      <div class="login-error" id="loginError"></div>
+    </form>
+  </div>
+</div>
+
+<!-- ═══════════ DASHBOARD ═══════════ -->
+<div class="admin-page" id="dashboardPage">
+  <div class="admin-header">
+    <div>
+      <div class="admin-title">Admin Dashboard</div>
+      <div class="admin-subtitle">Manage games and categories</div>
+    </div>
+    <div class="admin-actions">
+      <button class="btn-admin btn-secondary" id="btnLogout">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Logout
+      </button>
+      <button class="btn-admin btn-primary" id="btnAdd">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Add Game
+      </button>
+    </div>
+  </div>
+
+  <div class="stats-grid" id="statsGrid">
+    <div class="stat-card"><div class="stat-label">Total Games</div><div class="stat-value" id="sGames">—</div></div>
+    <div class="stat-card"><div class="stat-label">Total Plays</div><div class="stat-value" id="sPlays">—</div></div>
+    <div class="stat-card"><div class="stat-label">Featured</div><div class="stat-value" id="sFeatured">—</div></div>
+    <div class="stat-card"><div class="stat-label">Categories</div><div class="stat-value" id="sCats">—</div></div>
+  </div>
+
+  <div class="table-wrap">
+    <div class="table-header">
+      <div class="table-title">Games</div>
+      <input class="search-input" id="searchInput" placeholder="Search games..." />
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Game</th><th>Category</th><th>Difficulty</th>
+          <th>Plays</th><th>Rating</th><th>Featured</th><th>Trending</th><th style="text-align:right">Actions</th>
+        </tr>
+      </thead>
+      <tbody id="gamesBody"></tbody>
+    </table>
+    <div class="empty-state" id="emptyState" style="display:none;">No games found</div>
+  </div>
+</div>
+
+<!-- ═══════════ MODAL ═══════════ -->
+<div class="modal-bg" id="modal">
+  <div class="modal">
+    <h2 id="mTitle">Add Game</h2>
+    <p class="sub" id="mSub">Fill in the game details below</p>
+    <input type="hidden" id="mGameId">
+    <div class="field"><label>Title</label><input type="text" id="mTitle2" placeholder="e.g. 2048" required></div>
+    <div class="field"><label>Slug</label><input type="text" id="mSlug" placeholder="auto-generated from title"></div>
+    <div class="field"><label>Description</label><textarea id="mDesc" placeholder="Short description"></textarea></div>
+    <div class="field"><label>Game Folder</label><select id="mFolder" required><option value="">Select a game folder...</option></select></div>
+    <div class="row">
+      <div class="field"><label>Category</label><select id="mCat"></select></div>
+      <div class="field"><label>Difficulty</label>
+        <select id="mDiff">
+          <option value="easy">Easy</option>
+          <option value="medium" selected>Medium</option>
+          <option value="hard">Hard</option>
+        </select>
+      </div>
+    </div>
+    <div class="check"><input type="checkbox" id="mFeat"><label for="mFeat">Featured</label></div>
+    <div class="check"><input type="checkbox" id="mTrend"><label for="mTrend">Trending</label></div>
+    <div class="modal-actions">
+      <button class="btn-delete" id="mDelete" style="display:none;margin-right:auto;">Delete</button>
+      <button class="btn-cancel" id="mCancel">Cancel</button>
+      <button class="btn-save" id="mSave">Save Game</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-box" id="toastBox"></div>
+
+<script>
+(function(){
+const API = 'http://127.0.0.1:8000';
+let games = [], cats = [], folders = [], editId = null, token = null;
+
+// ── Toast ──
+function toast(msg, type='info'){
+  const t = document.createElement('div');
+  t.className = 'toast toast-' + type;
+  t.textContent = msg;
+  document.getElementById('toastBox').appendChild(t);
+  requestAnimationFrame(() => t.classList.add('show'));
+  setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 300); }, 3000);
+}
+
+// ── Auth ──
+function headers(){
+  return token ? { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' } : {};
+}
+
+async function tryAutoLogin(){
+  token = localStorage.getItem('admin_token');
+  if (!token) return false;
+  try {
+    const r = await fetch(API + '/api/v1/auth/me', { headers: { Authorization: 'Bearer ' + token } });
+    if (!r.ok) throw 0;
+    const u = await r.json();
+    if (u.role !== 'admin') { token = null; localStorage.removeItem('admin_token'); return false; }
+    return true;
+  } catch { token = null; localStorage.removeItem('admin_token'); return false; }
+}
+
+function showLogin(){
+  document.getElementById('loginPage').style.display = 'flex';
+  document.getElementById('dashboardPage').style.display = 'none';
+}
+function showDashboard(){
+  document.getElementById('loginPage').style.display = 'none';
+  document.getElementById('dashboardPage').style.display = 'block';
+}
+
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass = document.getElementById('loginPass').value;
+  const errEl = document.getElementById('loginError');
+  errEl.style.display = 'none';
+
+  try {
+    const body = new URLSearchParams();
+    body.append('username', email);
+    body.append('password', pass);
+
+    const r = await fetch(API + '/api/v1/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: body.toString()
+    });
+    if (!r.ok) {
+      const d = await r.json();
+      errEl.textContent = d.detail || 'Login failed';
+      errEl.style.display = 'block';
+      return;
+    }
+    const d = await r.json();
+    token = d.access_token;
+    localStorage.setItem('admin_token', token);
+
+    const ur = await fetch(API + '/api/v1/auth/me', { headers: { Authorization: 'Bearer ' + token } });
+    const u = await ur.json();
+    if (u.role !== 'admin') {
+      errEl.textContent = 'Admin access required';
+      errEl.style.display = 'block';
+      token = null;
+      localStorage.removeItem('admin_token');
+      return;
+    }
+    showDashboard();
+    load();
+  } catch {
+    errEl.textContent = 'Network error';
+    errEl.style.display = 'block';
+  }
+});
+
+document.getElementById('btnLogout').addEventListener('click', () => {
+  token = null;
+  localStorage.removeItem('admin_token');
+  showLogin();
+});
+
+// ── Load data ──
+async function load(){
+  try {
+    const [gr, cr, fr] = await Promise.all([
+      fetch(API + '/api/v1/admin/games', { headers: headers() }),
+      fetch(API + '/api/v1/categories'),
+      fetch(API + '/api/v1/admin/game-folders', { headers: headers() })
+    ]);
+    if (gr.status === 403) { toast('Admin access required', 'warning'); showLogin(); return; }
+    games = await gr.json();
+    cats = await cr.json();
+    folders = await fr.json();
+    renderStats();
+    renderTable(games);
+    fillCats();
+    fillFolders();
+  } catch { toast('Failed to load data', 'warning'); }
+}
+
+function renderStats(){
+  document.getElementById('sGames').textContent = games.length;
+  document.getElementById('sPlays').textContent = games.reduce((s,g) => s + g.plays, 0).toLocaleString();
+  document.getElementById('sFeatured').textContent = games.filter(g => g.is_featured).length;
+  document.getElementById('sCats').textContent = cats.length;
+}
+
+const COLORS = ['#3B82F6','#A3FF12','#F97316','#8B5CF6','#EC4899','#22C55E','#FACC15','#06B6D4'];
+function thumbGrad(i){ return `linear-gradient(135deg,${COLORS[i%COLORS.length]}33,${COLORS[(i+3)%COLORS.length]}22)`; }
+
+function renderTable(list){
+  const tbody = document.getElementById('gamesBody');
+  const empty = document.getElementById('emptyState');
+  tbody.innerHTML = '';
+  if (!list.length){ empty.style.display = 'block'; return; }
+  empty.style.display = 'none';
+
+  list.forEach((g,i) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><div class="game-info">
+        <div class="game-thumb" style="background:${thumbGrad(i)}">${g.title.substring(0,2)}</div>
+        <div><div class="game-name">${g.title}</div><div class="game-slug">${g.slug}</div></div>
+      </div></td>
+      <td style="color:var(--text-sec);font-size:13px">${g.category?.name||'—'}</td>
+      <td><span class="badge badge-${g.difficulty}">${g.difficulty}</span></td>
+      <td style="font-weight:600">${g.plays.toLocaleString()}</td>
+      <td style="color:var(--text-sec)">⭐ ${g.rating}</td>
+      <td><button class="toggle ${g.is_featured?'on':'off'}" data-id="${g.id}" data-f="featured"></button></td>
+      <td><button class="toggle ${g.is_trending?'on':'off'}" data-id="${g.id}" data-f="trending"></button></td>
+      <td style="text-align:right"><button class="icon-btn edit" data-id="${g.id}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+      </button></td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+function fillCats(){
+  const s = document.getElementById('mCat');
+  s.innerHTML = '';
+  cats.forEach(c => { const o = document.createElement('option'); o.value = c.id; o.textContent = c.name; s.appendChild(o); });
+}
+
+function fillFolders(){
+  const s = document.getElementById('mFolder');
+  s.innerHTML = '<option value="">Select a game folder...</option>';
+  folders.forEach(f => {
+    const o = document.createElement('option');
+    o.value = f.name;
+    o.textContent = f.name + (f.has_index ? '' : ' (no index.html)');
+    o.dataset.url = f.iframe_url;
+    s.appendChild(o);
+  });
+}
+
+// ── Toggle ──
+document.getElementById('gamesBody').addEventListener('click', async (e) => {
+  const btn = e.target.closest('.toggle');
+  if (!btn) return;
+  const ep = btn.dataset.f === 'featured' ? 'toggle-featured' : 'toggle-trending';
+  try {
+    const r = await fetch(API + `/api/v1/admin/games/${btn.dataset.id}/${ep}`, { method:'PATCH', headers:headers() });
+    if (r.ok){
+      const u = await r.json();
+      btn.classList.toggle('on'); btn.classList.toggle('off');
+      const g = games.find(x => x.id == btn.dataset.id);
+      if (g){ if (btn.dataset.f==='featured') g.is_featured=u.is_featured; else g.is_trending=u.is_trending; }
+      toast('Updated', 'success');
+    }
+  } catch { toast('Failed', 'warning'); }
+});
+
+// ── Edit ──
+document.getElementById('gamesBody').addEventListener('click', (e) => {
+  const btn = e.target.closest('.edit');
+  if (!btn) return;
+  const g = games.find(x => x.id == btn.dataset.id);
+  if (g) openEdit(g);
+});
+
+// ── Modal ──
+function openCreate(){
+  editId = null;
+  document.getElementById('mTitle').textContent = 'Add Game';
+  document.getElementById('mSub').textContent = 'Fill in the game details below';
+  document.getElementById('mGameId').value = '';
+  document.getElementById('mTitle2').value = '';
+  document.getElementById('mSlug').value = '';
+  document.getElementById('mDesc').value = '';
+  document.getElementById('mFolder').value = '';
+  document.getElementById('mDiff').value = 'medium';
+  document.getElementById('mFeat').checked = false;
+  document.getElementById('mTrend').checked = false;
+  document.getElementById('mDelete').style.display = 'none';
+  document.getElementById('mSlug').disabled = false;
+  document.getElementById('modal').classList.add('show');
+}
+function openEdit(g){
+  editId = g.id;
+  document.getElementById('mTitle').textContent = 'Edit Game';
+  document.getElementById('mSub').textContent = 'Editing "' + g.title + '"';
+  document.getElementById('mGameId').value = g.id;
+  document.getElementById('mTitle2').value = g.title;
+  document.getElementById('mSlug').value = g.slug;
+  document.getElementById('mDesc').value = g.description || '';
+  // Try to match iframe_url to a folder
+  const folderSel = document.getElementById('mFolder');
+  const match = folders.find(f => f.iframe_url === g.iframe_url);
+  folderSel.value = match ? match.name : '';
+  document.getElementById('mCat').value = g.category_id;
+  document.getElementById('mDiff').value = g.difficulty;
+  document.getElementById('mFeat').checked = g.is_featured;
+  document.getElementById('mTrend').checked = g.is_trending;
+  document.getElementById('mDelete').style.display = 'block';
+  document.getElementById('mSlug').disabled = true;
+  document.getElementById('modal').classList.add('show');
+}
+function closeModal(){ document.getElementById('modal').classList.remove('show'); editId = null; }
+
+document.getElementById('btnAdd').addEventListener('click', openCreate);
+document.getElementById('mCancel').addEventListener('click', closeModal);
+document.getElementById('modal').addEventListener('click', (e) => { if (e.target.id==='modal') closeModal(); });
+
+document.getElementById('mTitle2').addEventListener('input', (e) => {
+  if (!editId) document.getElementById('mSlug').value = e.target.value.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
+});
+
+document.getElementById('mFolder').addEventListener('change', (e) => {
+  if (!editId && e.target.value) {
+    document.getElementById('mSlug').value = e.target.value.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
+  }
+});
+
+// ── Save ──
+document.getElementById('mSave').addEventListener('click', async () => {
+  const folderName = document.getElementById('mFolder').value;
+  const folder = folders.find(f => f.name === folderName);
+  const data = {
+    title: document.getElementById('mTitle2').value.trim(),
+    slug: document.getElementById('mSlug').value.trim(),
+    description: document.getElementById('mDesc').value.trim(),
+    iframe_url: folder ? folder.iframe_url : '',
+    category_id: parseInt(document.getElementById('mCat').value),
+    difficulty: document.getElementById('mDiff').value,
+    is_featured: document.getElementById('mFeat').checked,
+    is_trending: document.getElementById('mTrend').checked,
+    is_new: true
+  };
+  if (!data.title || !data.slug){ toast('Title and slug required', 'warning'); return; }
+  if (!data.iframe_url){ toast('Select a game folder', 'warning'); return; }
+
+  try {
+    const r = await fetch(API + (editId ? `/api/v1/admin/games/${editId}` : '/api/v1/admin/games'), {
+      method: editId ? 'PUT' : 'POST',
+      headers: headers(),
+      body: JSON.stringify(data)
+    });
+    if (r.ok){ toast(editId ? 'Game updated!' : 'Game created!', 'success'); closeModal(); load(); }
+    else { const e = await r.json(); toast(e.detail || 'Failed', 'warning'); }
+  } catch { toast('Network error', 'warning'); }
+});
+
+// ── Delete ──
+document.getElementById('mDelete').addEventListener('click', async () => {
+  if (!editId || !confirm('Delete this game?')) return;
+  try {
+    const r = await fetch(API + `/api/v1/admin/games/${editId}`, { method:'DELETE', headers:headers() });
+    if (r.ok || r.status===204){ toast('Deleted', 'success'); closeModal(); load(); }
+    else toast('Failed', 'warning');
+  } catch { toast('Network error', 'warning'); }
+});
+
+// ── Search ──
+document.getElementById('searchInput').addEventListener('input', (e) => {
+  const q = e.target.value.toLowerCase();
+  if (!q){ renderTable(games); return; }
+  renderTable(games.filter(g => g.title.toLowerCase().includes(q) || g.slug.includes(q) || (g.category?.name||'').toLowerCase().includes(q)));
+});
+
+// ── Init ──
+(async () => {
+  const ok = await tryAutoLogin();
+  if (ok) showDashboard(), load();
+  else showLogin();
+})();
+})();
+</script>
+</body>
+</html>

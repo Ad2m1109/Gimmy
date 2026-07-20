@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feedback — GIMMY</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="shell">
+  <div class="sidebar-overlay" id="overlay"></div>
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="logo-row">
+      <img src="media/logo.png" alt="GIMMY Logo" style="width: 34px; height: 34px; object-fit: contain;">
+      <span class="logo-word">GIMMY</span>
+    </div>
+    <p class="nav-section-label">Menu</p>
+    <ul class="nav-list">
+      <li><a class="nav-link" href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 3l9 6.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1Z"/></svg>Home</a></li>
+      <li><a class="nav-link" href="index.html#discover"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m14.31 8-2.76 7.69L8.79 16l2.76-7.69Z"/></svg>Discover</a></li>
+      <li><a class="nav-link" href="index.html#categories"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Categories</a></li>
+      <li><a class="nav-link" href="index.html#trending"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>Trending</a></li>
+      <li><a class="nav-link" href="index.html#new"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 4.9L5 9l4.1 3-1.6 5L12 14l4.5 3-1.6-5 4.1-3-5.1-1.1Z"/></svg>New Games</a></li>
+      <li><a class="nav-link" href="index.html#challenge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="m9 16 2 2 4-4"/></svg>Daily Challenge</a></li>
+      <li><a class="nav-link" href="index.html#leaderboards"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0Zm-3 0H2v2a4 4 0 0 0 4 4M17 4h3v2a4 4 0 0 1-4 4"/></svg>Leaderboards</a></li>
+      <li><a class="nav-link" href="index.html#recent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Recently Played</a></li>
+      <li><a class="nav-link" href="favorites.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z"/></svg>Favorites</a></li>
+    </ul>
+    <div class="sidebar-bottom">
+      <a class="nav-link" href="settings.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>Settings</a>
+      <button class="theme-toggle" id="themeToggle" aria-pressed="true">
+        <span style="display:flex; align-items:center; gap:12px;">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+          <span id="themeText">Dark theme</span>
+        </span>
+        <span class="toggle-track on"><span class="toggle-dot"></span></span>
+      </button>
+      <a class="nav-link active" href="feedback.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/></svg>Feedback</a>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <div class="main-col">
+    <header class="topbar">
+      <button class="icon-btn mobile-menu-btn" id="menuBtn" aria-label="Open menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
+      </button>
+      <div class="logo-row mobile-only" style="margin:0 auto;">
+        <img src="media/logo.png" alt="GIMMY Logo" style="object-fit: contain;">
+        <span class="logo-word topbar-word">GIMMY</span>
+      </div>
+      <div class="search-wrap desktop-search" style="position:relative;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input id="desktopSearch" type="text" placeholder="Search games..." autocomplete="off" aria-label="Search games">
+        <span class="kbd">⌘K</span>
+        <div id="searchResults" class="search-results-dropdown" style="display:none;"></div>
+      </div>
+      <div class="topbar-actions">
+        <button class="btn btn-outline" id="loginBtn">Log in</button>
+        <div class="avatar" id="avatarBtn" title="Your profile" style="display:none; position:relative; cursor:pointer;">
+          <span id="avatarInitials">?</span>
+          <div class="dropdown-panel" id="profileDropdown">
+            <div class="dropdown-header">My Account</div>
+            <a href="profile.html" style="text-decoration:none;"><button class="dropdown-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Profile</button></a>
+            <a href="settings.html" style="text-decoration:none;"><button class="dropdown-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg> Settings</button></a>
+            <div class="dropdown-divider"></div>
+            <button class="dropdown-item danger" id="logoutBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg> Log out</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="content" style="padding-top:40px;">
+
+      <!-- PAGE HEADER -->
+      <div style="margin-bottom:32px;">
+        <div style="display:flex; align-items:center; gap:14px; margin-bottom:8px;">
+          <div style="width:44px; height:44px; border-radius:12px; background:linear-gradient(135deg, #8B5CF6, #EC4899); display:flex; align-items:center; justify-content:center;">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/></svg>
+          </div>
+          <div>
+            <h1 style="font-family:'Sora'; font-size:28px; font-weight:800; color:var(--text); margin:0;">Feedback</h1>
+            <p style="color:var(--text-sec); font-size:14px; margin:0;">We'd love to hear from you! Report bugs, request features, or share ideas.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUBMIT FORM -->
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:20px; padding:32px; margin-bottom:40px;">
+        <h3 style="font-family:'Sora'; font-size:18px; font-weight:700; margin-bottom:24px;">Submit Feedback</h3>
+        <form id="feedbackForm">
+          <div style="display:flex; flex-direction:column; gap:20px; max-width:600px;">
+            <div>
+              <label style="display:block; font-size:12.5px; font-weight:600; color:var(--text-sec); text-transform:uppercase; letter-spacing:.5px; margin-bottom:8px;">Type</label>
+              <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                <button type="button" class="fb-type-btn active" data-type="bug" style="padding:8px 16px; border-radius:10px; border:1px solid var(--border-strong); background:var(--primary-dim); color:var(--primary); font-family:'Sora'; font-weight:600; font-size:13px; cursor:pointer;">Bug</button>
+                <button type="button" class="fb-type-btn" data-type="feature" style="padding:8px 16px; border-radius:10px; border:1px solid var(--border); background:var(--surface-2); color:var(--text-sec); font-family:'Sora'; font-weight:600; font-size:13px; cursor:pointer;">Feature</button>
+                <button type="button" class="fb-type-btn" data-type="general" style="padding:8px 16px; border-radius:10px; border:1px solid var(--border); background:var(--surface-2); color:var(--text-sec); font-family:'Sora'; font-weight:600; font-size:13px; cursor:pointer;">General</button>
+              </div>
+              <input type="hidden" id="fbType" value="bug">
+            </div>
+            <div>
+              <label style="display:block; font-size:12.5px; font-weight:600; color:var(--text-sec); text-transform:uppercase; letter-spacing:.5px; margin-bottom:6px;">Title</label>
+              <input type="text" id="fbTitle" placeholder="Brief summary of your feedback" required maxlength="200" style="background:var(--surface-2); border:1px solid var(--border); border-radius:10px; padding:10px 14px; font-size:14px; color:var(--text); outline:none; font-family:'Inter'; width:100%; transition:border-color .15s;">
+            </div>
+            <div>
+              <label style="display:block; font-size:12.5px; font-weight:600; color:var(--text-sec); text-transform:uppercase; letter-spacing:.5px; margin-bottom:6px;">Description</label>
+              <textarea id="fbDesc" rows="5" placeholder="Describe your feedback in detail..." required style="background:var(--surface-2); border:1px solid var(--border); border-radius:10px; padding:10px 14px; font-size:14px; color:var(--text); outline:none; font-family:'Inter'; width:100%; resize:vertical; transition:border-color .15s;"></textarea>
+            </div>
+            <div>
+              <button type="submit" class="btn btn-primary" id="fbSubmitBtn">Send Feedback</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- MY PAST FEEDBACK -->
+      <div>
+        <h3 style="font-family:'Sora'; font-size:18px; font-weight:700; margin-bottom:20px;">Your Previous Feedback</h3>
+        <div id="fbHistory"></div>
+        <div id="fbEmpty" style="display:none; padding:40px; text-align:center; background:var(--surface); border-radius:16px; border:1px dashed var(--border-strong);">
+          <p style="color:var(--text-tert); font-size:14px; margin:0;">No feedback submitted yet.</p>
+        </div>
+        <div id="fbLoading" style="padding:40px; text-align:center; color:var(--text-tert);">Loading your feedback...</div>
+      </div>
+
+    </main>
+
+    <footer>
+      <div class="footer-bottom" style="border-top:none; padding-top:0;">
+        <span class="footer-copy">© 2026 GIMMY. All rights reserved.</span>
+      </div>
+    </footer>
+  </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div id="toastContainer" class="toast-container"></div>
+
+<script src="js/app.js"></script>
+<script>
+(function() {
+  const API = 'http://127.0.0.1:8000/api/v1';
+  const token = localStorage.getItem('access_token');
+
+  // ─── Type selector ───
+  document.querySelectorAll('.fb-type-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.fb-type-btn').forEach(b => {
+        b.classList.remove('active');
+        b.style.background = 'var(--surface-2)';
+        b.style.color = 'var(--text-sec)';
+        b.style.borderColor = 'var(--border)';
+      });
+      this.classList.add('active');
+      this.style.background = 'var(--primary-dim)';
+      this.style.color = 'var(--primary)';
+      this.style.borderColor = 'var(--border-strong)';
+      document.getElementById('fbType').value = this.dataset.type;
+    });
+  });
+
+  // ─── Submit feedback ───
+  document.getElementById('feedbackForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('fbSubmitBtn');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+    try {
+      const headers = { 'Content-Type': 'application/json' };
+      if (token) headers['Authorization'] = 'Bearer ' + token;
+      const res = await fetch(API + '/feedback', {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify({
+          type: document.getElementById('fbType').value,
+          title: document.getElementById('fbTitle').value,
+          description: document.getElementById('fbDesc').value,
+        })
+      });
+      if (res.ok) {
+        showToast('Feedback submitted! Thank you.', 'success');
+        document.getElementById('feedbackForm').reset();
+        document.getElementById('fbType').value = 'bug';
+        // Reset type buttons
+        document.querySelectorAll('.fb-type-btn').forEach(b => {
+          b.classList.remove('active');
+          b.style.background = 'var(--surface-2)';
+          b.style.color = 'var(--text-sec)';
+          b.style.borderColor = 'var(--border)';
+        });
+        document.querySelector('.fb-type-btn[data-type="bug"]').classList.add('active');
+        document.querySelector('.fb-type-btn[data-type="bug"]').style.background = 'var(--primary-dim)';
+        document.querySelector('.fb-type-btn[data-type="bug"]').style.color = 'var(--primary)';
+        document.querySelector('.fb-type-btn[data-type="bug"]').style.borderColor = 'var(--border-strong)';
+        loadMyFeedback();
+      } else {
+        const data = await res.json();
+        showToast(data.detail || 'Submission failed', 'warning');
+      }
+    } catch(err) {
+      showToast('Connection error', 'warning');
+    }
+    btn.textContent = 'Send Feedback';
+    btn.disabled = false;
+  });
+
+  // ─── Load my feedback ───
+  async function loadMyFeedback() {
+    const histEl = document.getElementById('fbHistory');
+    const emptyEl = document.getElementById('fbEmpty');
+    const loadingEl = document.getElementById('fbLoading');
+
+    if (!token) {
+      loadingEl.style.display = 'none';
+      emptyEl.style.display = 'block';
+      emptyEl.innerHTML = '<p style="color:var(--text-tert); font-size:14px; margin:0;">Please <a href="index.html" style="color:var(--primary); text-decoration:none; font-weight:600;">log in</a> to see your feedback history.</p>';
+      return;
+    }
+
+    try {
+      const res = await fetch(API + '/feedback/me', {
+        headers: { 'Authorization': 'Bearer ' + token }
+      });
+      if (!res.ok) throw new Error();
+      const items = await res.json();
+      loadingEl.style.display = 'none';
+
+      if (items.length === 0) {
+        emptyEl.style.display = 'block';
+        return;
+      }
+
+      histEl.innerHTML = '';
+      const typeIcons = { bug: 'Bug', feature: 'Feature', general: 'General' };
+      const statusColors = { open: '#F97316', in_progress: '#3B82F6', closed: '#22C55E' };
+      const statusLabels = { open: 'Open', in_progress: 'In Progress', closed: 'Closed' };
+
+      items.forEach(item => {
+        const el = document.createElement('div');
+        el.style.cssText = 'display:flex; align-items:center; gap:16px; padding:16px 20px; background:var(--surface); border:1px solid var(--border); border-radius:14px; margin-bottom:10px;';
+        const sc = statusColors[item.status] || '#F97316';
+        const sl = statusLabels[item.status] || item.status;
+        el.innerHTML = `
+          <div style="padding:4px 12px; border-radius:8px; background:var(--surface-2); font-size:12px; font-weight:600; color:var(--text-sec); text-transform:capitalize; white-space:nowrap;">${typeIcons[item.type] || item.type}</div>
+          <div style="flex:1; min-width:0;">
+            <div style="font-family:'Sora'; font-weight:600; font-size:14px; margin-bottom:2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${item.title}</div>
+            <div style="font-size:12px; color:var(--text-tert);">${new Date(item.created_at).toLocaleDateString()}</div>
+          </div>
+          <div style="padding:4px 12px; border-radius:8px; background:${sc}18; color:${sc}; font-size:12px; font-weight:600; white-space:nowrap;">${sl}</div>
+        `;
+        histEl.appendChild(el);
+      });
+    } catch(err) {
+      loadingEl.textContent = 'Error loading feedback.';
+    }
+  }
+
+  loadMyFeedback();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Play Game — GIMMY</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<style>
+  .game-page{display:flex; flex-direction:column; height:100vh; overflow:hidden; background:var(--bg);}
+  .game-topbar{
+    display:flex; align-items:center; gap:16px; padding:12px 24px;
+    background:var(--surface); border-bottom:1px solid var(--border); flex-shrink:0; z-index:10;
+  }
+  .game-back{
+    display:flex; align-items:center; gap:8px; color:var(--text-sec); font-size:14px; font-weight:500;
+    cursor:pointer; transition:color .15s; text-decoration:none;
+  }
+  .game-back:hover{ color:var(--primary); }
+  .game-back svg{ width:18px; height:18px; }
+  .game-topbar-title{
+    font-family:'Sora'; font-weight:700; font-size:16px; color:var(--text); flex:1;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+  .game-topbar-actions{ display:flex; gap:8px; margin-left:auto; }
+  .game-topbar-actions button{
+    display:flex; align-items:center; gap:6px; padding:8px 14px; border-radius:10px;
+    font-family:'Sora'; font-weight:600; font-size:13px; cursor:pointer; border:none;
+    transition:background .15s, transform .15s;
+  }
+  .game-topbar-actions button:hover{ transform:scale(1.02); }
+  .game-topbar-actions .btn-fav{
+    background:var(--surface-2); color:var(--text-sec); border:1px solid var(--border);
+  }
+  .game-topbar-actions .btn-fav.active{ background:rgba(236,72,153,0.14); color:#EC4899; border-color:rgba(236,72,153,0.3); }
+  .game-topbar-actions .btn-fav svg{ width:16px; height:16px; }
+  .game-topbar-actions .btn-share{
+    background:var(--surface-2); color:var(--text-sec); border:1px solid var(--border);
+  }
+  .game-topbar-actions .btn-share svg{ width:16px; height:16px; }
+  .game-topbar-actions .btn-fullscreen{
+    background:var(--primary); color:#0B1300;
+  }
+  .game-topbar-actions .btn-fullscreen svg{ width:16px; height:16px; }
+
+  .game-iframe-wrap{
+    flex:1; display:flex; align-items:center; justify-content:center;
+    overflow:hidden; background:#000; position:relative;
+  }
+  .game-iframe-wrap iframe{
+    width:100%; height:100%; border:none;
+  }
+  .game-loading{
+    position:absolute; inset:0; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; background:var(--bg); z-index:5;
+  }
+  .game-loading-spinner{
+    width:40px; height:40px; border:3px solid var(--surface-3);
+    border-top-color:var(--primary); border-radius:50%;
+    animation:spin .8s linear infinite;
+  }
+  @keyframes spin{ to{transform:rotate(360deg);} }
+  .game-loading p{ margin-top:16px; color:var(--text-sec); font-size:14px; }
+
+  .game-info-bar{
+    display:flex; align-items:center; gap:20px; padding:12px 24px;
+    background:var(--surface); border-top:1px solid var(--border); flex-shrink:0;
+    font-size:13px; color:var(--text-sec); overflow-x:auto;
+  }
+  .game-info-item{ display:flex; align-items:center; gap:6px; white-space:nowrap; }
+  .game-info-item svg{ width:14px; height:14px; flex-shrink:0; }
+  .game-info-item strong{ color:var(--text); font-weight:600; }
+  .game-info-divider{ width:1px; height:16px; background:var(--border-strong); flex-shrink:0; }
+
+  .difficulty-badge{
+    padding:2px 8px; border-radius:6px; font-weight:600; font-size:11px; text-transform:uppercase;
+  }
+  .difficulty-easy{ background:rgba(34,197,94,0.14); color:#22C55E; }
+  .difficulty-medium{ background:rgba(249,115,22,0.14); color:#F97316; }
+  .difficulty-hard{ background:rgba(239,68,68,0.14); color:#EF4444; }
+</style>
+</head>
+<body class="game-page">
+
+  <!-- Top Bar -->
+  <div class="game-topbar">
+    <a href="index.html" class="game-back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      Back
+    </a>
+    <div class="game-topbar-title" id="gameTitle">Loading...</div>
+    <div class="game-topbar-actions">
+      <button class="btn-fav" id="favBtn" style="display:none;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z"/></svg>
+        <span id="favText">Favorite</span>
+      </button>
+      <button class="btn-share" id="shareBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        Share
+      </button>
+      <button class="btn-fullscreen" id="fullscreenBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+        Fullscreen
+      </button>
+    </div>
+  </div>
+
+  <!-- Game Frame -->
+  <div class="game-iframe-wrap" id="gameFrame">
+    <div class="game-loading" id="gameLoading">
+      <div class="game-loading-spinner"></div>
+      <p>Loading game...</p>
+    </div>
+    <iframe id="gameIframe" sandbox="allow-scripts allow-same-origin allow-popups allow-forms" allowfullscreen></iframe>
+  </div>
+
+  <!-- Info Bar -->
+  <div class="game-info-bar" id="gameInfoBar">
+    <div class="game-info-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+      <span id="gameCategory">—</span>
+    </div>
+    <div class="game-info-divider"></div>
+    <div class="game-info-item">
+      <span id="gameDifficulty" class="difficulty-badge difficulty-medium">Medium</span>
+    </div>
+    <div class="game-info-divider"></div>
+    <div class="game-info-item">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61Z"/></svg>
+      <strong id="gameRating">0</strong>
+    </div>
+    <div class="game-info-divider"></div>
+    <div class="game-info-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <strong id="gamePlays">0</strong> plays
+    </div>
+    <div class="game-info-divider"></div>
+    <div class="game-info-item" id="gameDescription" style="color:var(--text-tert); max-width:400px; overflow:hidden; text-overflow:ellipsis;"></div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- Login Modal -->
+  <div class="modal-backdrop" id="loginModal">
+    <div class="modal-card">
+      <h2 id="modalTitle">Welcome back</h2>
+      <p class="modal-sub" id="modalSub">Log in to your GIMMY account</p>
+      <form id="authForm">
+        <div class="modal-field" id="usernameField">
+          <label>Username</label>
+          <input type="text" id="authUsername" placeholder="Enter your username" required>
+        </div>
+        <div class="modal-field" id="emailField" style="display:none;">
+          <label>Email</label>
+          <input type="email" id="authEmail" placeholder="Enter your email">
+        </div>
+        <div class="modal-field">
+          <label>Password</label>
+          <input type="password" id="authPassword" placeholder="Enter your password" required>
+        </div>
+        <div class="modal-actions">
+          <button type="submit" class="btn btn-primary" id="authSubmitBtn">Log in</button>
+        </div>
+      </form>
+      <div class="modal-divider"><span>or</span></div>
+      <div id="googleSignInDiv"></div>
+      <div class="modal-toggle-link" id="authToggle">Don't have an account? <span id="authToggleLink">Sign up</span></div>
+    </div>
+  </div>
+
+<script src="js/app.js"></script>
+<script src="js/game.js"></script>
+</body>
+</html>
